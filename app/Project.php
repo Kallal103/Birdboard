@@ -5,10 +5,13 @@ namespace App;
 use App\Activity;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class Project extends Model
 {
     protected $guarded = [];
+
+    public $old = [];
 
     public function path()
     {
@@ -37,11 +40,27 @@ class Project extends Model
      */
     public function recordActivity($description)
     {
-        $this->activity()->create(compact('description'));
-        // Activity::create([
-        //     'project_id' => $this->id,
-        //     'description' => $type
-        // ]);
+        $this->activity()->create([
+            'description' => $description,
+            'changes' => $this->activityChanges($description)
+        ]);
+
+    }
+
+     /**
+     * Fetch the changes to the model.
+     *
+     * @param  string $description
+     * @return array|null
+     */
+    protected function activityChanges($description)
+    {
+        if ($description == 'updated') {
+            return [
+                'before' => Arr::except(array_diff($this->old, $this->getAttributes()), 'updated_at'),
+                'after' => Arr::except($this->getChanges(), 'updated_at')
+            ];
+        }
     }
 
     public function activity()
