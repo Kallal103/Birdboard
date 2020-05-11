@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,8 +15,7 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-
-     Route::resource('projects', 'ProjectsController');
+    Route::resource('projects', 'ProjectsController');
 
     Route::post('/projects/{project}/tasks', 'ProjectTasksController@store');
     Route::patch('/projects/{project}/tasks/{task}', 'ProjectTasksController@update');
@@ -25,3 +23,5 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Auth::routes();
+
+
