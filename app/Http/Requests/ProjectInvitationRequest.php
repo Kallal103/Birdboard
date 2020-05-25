@@ -8,14 +8,17 @@ use Illuminate\Validation\Rule;
 
 class ProjectInvitationRequest extends FormRequest
 {
+    protected $errorBag = 'invitations';
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
+    
+
     public function authorize()
     {
-        return Gate::allows('update', $this->route('project'));
+        return Gate::allows('manage', $this->route('project'));
     }
 
     /**
@@ -36,4 +39,6 @@ class ProjectInvitationRequest extends FormRequest
             'email.exists' => 'The user you are inviting must have a Birdboard account.'
         ];
     }
+
+
 }
