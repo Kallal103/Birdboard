@@ -4,12 +4,15 @@
        <a href="{{$project->path()}}" class=" text-black no-underline">{{$project->title}}</a>  
        </h3>
        <div class=" text-gray-600 mb-4 flex-1">{{ Illuminate\Support\Str::limit($project->description, 50) }}</div>
-       <footer>
+       @can('manage', $project)
+              <footer>
        <form method="POST" action="{{$project->path()}}" class=" text-right">
                @method('DELETE')
                @csrf
                <button type="submit" class=" text-xs"> Delete </button>
            </form>
        </footer>
+       @endcan
+    
        </div>
  
