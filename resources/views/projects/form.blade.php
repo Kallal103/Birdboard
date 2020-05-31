@@ -6,7 +6,7 @@
     <div class="control">
         <input
                 type="text"
-                class="input bg-transparent border border-muted-light rounded p-2 text-sm text-accent  w-full"
+                class="input bg-transparent border border-muted-light rounded p-2 text-sm text-accent w-full"
                
                 name="title"
                 placeholder="My next awesome project"
