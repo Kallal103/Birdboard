@@ -46,6 +46,21 @@ class ManageProjectsTest extends TestCase
             ->assertSee($attributes['notes']);
     }
 
+        public function test_tasks_can_be_included_as_a_part_of_new_project_creation()
+    {
+        $this->signIn();
+        $attributes = factory(Project::class)->raw();
+
+        $attributes['tasks'] = [
+            ['body' => 'Task 1'],
+            ['body' => 'Task 2']
+        ];
+
+        $this->post('/projects', $attributes);
+
+        $this->assertCount(2, Project::first()->tasks);
+    }
+
     function test_a_user_can_see_all_projects_they_have_been_invited_to_on_their_dashboard()
     {
         $project = tap(ProjectFactory::create())->invite($this->signIn());
